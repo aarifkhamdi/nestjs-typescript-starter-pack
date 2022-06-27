@@ -1,0 +1,8 @@
+services:
+  mongo:
+    volumes:
+      - ./docker_data/mongo_volume:/data/db
+
+networks:
+  default:
+    name: ttt

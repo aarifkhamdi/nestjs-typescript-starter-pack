@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "src",
+    "test"
+  ],
+  "exclude": [
+    "**/*.e2e-spec.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.smoke-spec.ts"
+  ]
+}

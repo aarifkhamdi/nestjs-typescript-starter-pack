@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "environment:local:up": "docker-compose -p ttt-local -f docker/docker-compose.yml -f docker/docker-compose.local.yml up -d",
+    "environment:local:down": "docker-compose -p ttt-local -f docker/docker-compose.yml -f docker/docker-compose.local.yml down",
+    "environment:test:up": "docker-compose -p ttt-test -f docker/docker-compose.yml -f docker/docker-compose.test.yml up -d",
+    "environment:test:down": "docker-compose -p ttt-test -f docker/docker-compose.yml -f docker/docker-compose.test.yml down -v",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --max-warnings 0",
+    "lint:fix": "pnpm run lint --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:unit": "jest --testPathPattern=test/unit",
+    "test:integration": "jest --testPathPattern=test/integration",
+    "test:e2e": "jest --apps/main/testPathPattern=test/e2e --config=jest.config.e2e.ts",
+    "prepare": "husky install",
+    "run_migration": "cp migrations-old/$npm_config_migrationfile.ts src/ && nest build && cp -r secrets dist/src/ && node dist/src/$npm_config_migrationfile.js && rimraf dist && rm src/$npm_config_migrationfile.ts",
+    "migrate:create": "migrate create --template-file ./migration-utils/template.ts --migrations-dir=\"./migrations\"",
+    "migrate:up": "nest build && cp -r secrets dist/migrations/ && node migration-utils/migrate.js --direction up $npm_config_dst && rimraf dist",
+    "migrate:down": "nest build && cp -r secrets dist/migrations/ && node migration-utils/migrate.js --direction down $npm_config_dst && rimraf dist"
+  }
+}
